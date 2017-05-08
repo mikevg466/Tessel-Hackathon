@@ -2,6 +2,7 @@ var http = require('http');
 var tessel = require('tessel');
 var climatelib = require('climate-si7020');
 var climate = climatelib.use(tessel.port['A']);
+var pictureTime = require('../camera/camera.js')
 
 
 
@@ -51,6 +52,7 @@ climate.on('ready', function () {
           'temperature': temp.toFixed(2),
           'humidity': humid.toFixed(2)
         });
+        
         SendData(postData);
         setTimeout(loop, 500);
       });
