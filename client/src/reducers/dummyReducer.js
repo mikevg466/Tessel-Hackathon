@@ -22,6 +22,7 @@ export default (state = initialState, action) => {
 
     case UPDATE_TEMPERATURE:
         newState.temperature = action.tempNum;
+        console.log(newState);
         break;
     default:
         return newState;

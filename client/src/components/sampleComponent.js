@@ -26,7 +26,7 @@ class SampleComponent extends Component {
 
 
     //attach bound functions here
-    //this.func = this.func.bind(this)
+    this.getComponent = getComponent.bind(this)
   }
 
   componentDidMount() {
@@ -37,6 +37,7 @@ class SampleComponent extends Component {
       axios.get('http://192.168.3.97:3000/tessel', getOptions)
       .then((res) => {
         console.log(res.data.temperature);
+        store.dispatch(updateTemperature(res.data.temperature));
       })
       .catch(console.error.bind(console))
       // req.on('error', function(err){
@@ -55,7 +56,7 @@ class SampleComponent extends Component {
       <div>
         <div className="row">
           <div id="Geoff" className="col-lg-10 col-md-10 col-sm-12">
-            {getComponent()}
+            {this.getComponent(this.props.temperature)}
           </div>
           <div id="temperature" className="col-lg-2 col-md-2 col-sm-12">
             <h2>The Temperature Is: {this.props.temperature} F</h2>
@@ -86,25 +87,55 @@ export default connect(mapState, null)(SampleComponent);
 
 function componentA(){
   return (
-    <img src="/images/Geoff-Face.jpg"></img>
+    <div className="row">
+      <div className="sideImg col-lg-2 col-md-2 col-sm-2">
+        <img className="sideImage" src="/images/rainbows.gif"></img>
+      </div>
+      <div className="col-lg-5 col-md-5 col-sm-5">
+        <img src="/images/Geoff-Face.jpg"></img>
+      </div>
+      <div className="sideImg col-lg-2 col-md-2 col-sm-2">
+        <img className="sideImage" src="/images/rainbows.gif"></img>
+      </div>
+    </div>
   );
 }
 
 function componentB(){
   return (
-    <img src="/images/Cold-Temp.png"></img>
+    <div className="row">
+      <div className="sideImg col-lg-2 col-md-2 col-sm-2">
+        <img className="sideImage" src="/images/penguins.gif"></img>
+      </div>
+      <div className="col-lg-5 col-md-5 col-sm-5">
+        <img src="/images/Cold-Temp.png"></img>
+      </div>
+      <div className="sideImg col-lg-2 col-md-2 col-sm-2">
+        <img className="sideImage" src="/images/penguins.gif"></img>
+      </div>
+    </div>
   );
 }
 
 function componentC(){
   return (
-    <img src="/images/hotTemp.jpg"></img>
+    <div className="row">
+      <div className="sideImg col-lg-2 col-md-2 col-sm-2">
+        <img className="sideImage" src="/images/hotPeppers.jpeg"></img>
+      </div>
+      <div className="col-lg-5 col-md-5 col-sm-5">
+        <img src="/images/hotTemp.png"></img>
+      </div>
+      <div className="sideImg col-lg-2 col-md-2 col-sm-2">
+        <img className="sideImage" src="/images/hotPeppers.jpeg"></img>
+      </div>
+    </div>
   );
 }
 
   var test = 2;
-  function getComponent(){
-    if(test === 0) return componentA();
-    if(test === 1) return componentB();
+  function getComponent(temp){
+    if(+temp <= 77) return componentB();
+    if(+temp <= 78) return componentA();
     return componentC();
   }
