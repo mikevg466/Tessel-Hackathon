@@ -12197,7 +12197,6 @@ var SampleComponent = function (_Component) {
 
     _this.state = {};
 
-    _this.messageNumber = 0;
     //attach bound functions here
     //this.func = this.func.bind(this)
     return _this;
@@ -12206,21 +12205,15 @@ var SampleComponent = function (_Component) {
   _createClass(SampleComponent, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // this.messageId = setInterval( () => {
-      //   //incrememnt message id and send to reducer
-      //   this.changeMessage();
-      // }, 1000);
-
-      // this.temperatureId = setInterval( () => {
-      //   //incrememnt message id and send to reducer
-      //   this.changeMessage();
-      // }, 1000);
+      this.temperatureId = setInterval(function () {
+        //incrememnt message id and send to reducer
+        // store.dispatch(updateTemperature());
+      }, 1000);
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      clearInterval(this.messageId);
-      // clearInterval(this.temperatureId);
+      clearInterval(this.temperatureId);
     }
   }, {
     key: 'render',
@@ -12242,20 +12235,13 @@ var SampleComponent = function (_Component) {
             _react2.default.createElement(
               'h2',
               null,
-              this.props.temperature
+              'The Temperature Is: ',
+              this.props.temperature,
+              ' F'
             )
           )
         )
       );
-    }
-  }, {
-    key: 'changeMessage',
-    value: function changeMessage() {
-      ++this.messageNumber;
-      if (this.messageNumber > _dummyReducer.amountOfMessages) {
-        this.messageNumber = 0;
-      }
-      _store2.default.dispatch((0, _dummyReducer.updateMessage)(this.messageNumber));
     }
   }]);
 
@@ -12355,19 +12341,14 @@ Object.defineProperty(exports, "__esModule", {
 /* Dependencies */
 
 /* Action Types */
-var UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+var UPDATE_TEMPERATURE = 'UPDATE_TEMPERATURE';
 
-/* Action Creators */
-var updateMessage = exports.updateMessage = function updateMessage(messageNumber) {
+var updateTemperature = exports.updateTemperature = function updateTemperature(tempNum) {
   return {
-    type: UPDATE_MESSAGE,
-    messageNumber: messageNumber
+    type: UPDATE_TEMPERATURE,
+    tempNum: tempNum
   };
 };
-
-// Data used for Dummy Reducer
-var messages = ['React', 'Express Servers', 'Live Reloading', 'Webpack Bundling', 'Modular SCSS Compiling / Importing', 'Redux Dev Tools Extension', 'Babel React/ES6 Syntax'];
-var amountOfMessages = exports.amountOfMessages = messages.length - 1;
 
 /* Initial State */
 var initialState = {
@@ -12383,10 +12364,9 @@ exports.default = function () {
   var newState = Object.assign({}, state);
   switch (action.type) {
 
-    case UPDATE_MESSAGE:
-      newState.message = messages[action.messageNumber];
+    case UPDATE_TEMPERATURE:
+      newState.temperature = action.tempNum;
       break;
-
     default:
       return newState;
   }

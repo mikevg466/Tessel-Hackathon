@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import store from '../store.js';
 
 // Project Dependencies
-import { updateMessage, amountOfMessages } from '../reducers/dummyReducer';
+import { updateTemperature } from '../reducers/dummyReducer';
 
 import './sampleComponentStyle.scss';
 
@@ -13,26 +13,19 @@ class SampleComponent extends Component {
 
     this.state = {};
 
-    this.messageNumber = 0;
     //attach bound functions here
     //this.func = this.func.bind(this)
   }
 
   componentDidMount() {
-    // this.messageId = setInterval( () => {
-    //   //incrememnt message id and send to reducer
-    //   this.changeMessage();
-    // }, 1000);
-
-    // this.temperatureId = setInterval( () => {
-    //   //incrememnt message id and send to reducer
-    //   this.changeMessage();
-    // }, 1000);
+    this.temperatureId = setInterval( () => {
+      //incrememnt message id and send to reducer
+      // store.dispatch(updateTemperature());
+    }, 1000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.messageId);
-    // clearInterval(this.temperatureId);
+    clearInterval(this.temperatureId);
   }
 
   render() {
@@ -43,20 +36,13 @@ class SampleComponent extends Component {
             {getComponent()}
           </div>
           <div id="temperature" className="col-lg-2 col-md-2 col-sm-12">
-            <h2>{this.props.temperature}</h2>
+            <h2>The Temperature Is: {this.props.temperature} F</h2>
           </div>
         </div>
       </div>
     );
   }
 
-  changeMessage() {
-    ++this.messageNumber;
-    if (this.messageNumber > amountOfMessages) {
-      this.messageNumber = 0;
-    }
-    store.dispatch(updateMessage(this.messageNumber));
-  }
 }
 
 var temperature = 87;

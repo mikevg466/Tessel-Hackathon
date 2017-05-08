@@ -2,19 +2,12 @@
 
 
 /* Action Types */
-const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+const UPDATE_TEMPERATURE = 'UPDATE_TEMPERATURE'
 
-/* Action Creators */
-export const updateMessage = (messageNumber) => ({
-  type: UPDATE_MESSAGE,
-  messageNumber
+export const updateTemperature = (tempNum) => ({
+  type: UPDATE_TEMPERATURE,
+  tempNum
 });
-
-
-
-// Data used for Dummy Reducer
-const messages = ['React', 'Express Servers', 'Live Reloading', 'Webpack Bundling', 'Modular SCSS Compiling / Importing', 'Redux Dev Tools Extension', 'Babel React/ES6 Syntax'];
-export const amountOfMessages = messages.length - 1;
 
 
 /* Initial State */
@@ -27,10 +20,9 @@ export default (state = initialState, action) => {
   let newState = Object.assign({}, state);
   switch (action.type) {
 
-    case UPDATE_MESSAGE:
-        newState.message = messages[action.messageNumber];
+    case UPDATE_TEMPERATURE:
+        newState.temperature = action.tempNum;
         break;
-
     default:
         return newState;
   }
