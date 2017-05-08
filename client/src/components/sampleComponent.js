@@ -1,3 +1,6 @@
+// const http = require('http');
+const axios = require('axios');
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../store.js';
@@ -7,11 +10,20 @@ import { updateTemperature } from '../reducers/dummyReducer';
 
 import './sampleComponentStyle.scss';
 
+const getOptions = {
+
+    mode: 'no-cors'
+    // headers: {
+    //   'Content-Type': 'application/json
+};
+
 class SampleComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {};
+
+
 
     //attach bound functions here
     //this.func = this.func.bind(this)
@@ -19,7 +31,17 @@ class SampleComponent extends Component {
 
   componentDidMount() {
     this.temperatureId = setInterval( () => {
-      //incrememnt message id and send to reducer
+      console.log('making request');
+      // var req = http.get(getOptions, function(res) {
+      // var req = http.get('http://192.168.3.97:3000/tessel', function(res){
+      axios.get('http://192.168.3.97:3000/tessel', getOptions)
+      .then((res) => {
+        console.log(res.data.temperature);
+      })
+      .catch(console.error.bind(console))
+      // req.on('error', function(err){
+      //   console.log(err);
+      // })
       // store.dispatch(updateTemperature());
     }, 1000);
   }
