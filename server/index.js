@@ -23,6 +23,7 @@ app.listen(PORT, () => {
 app.use('/api', require('./api'));
 // app.use('/tessel', tessel)
 app.use(express.static(path.join(__dirname, '..', 'client/src/public')));
+app.use(express.static(path.join(__dirname, '..', 'node_modules')));
 
 let data = {temperature: null};
 

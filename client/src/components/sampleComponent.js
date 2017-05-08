@@ -19,21 +19,33 @@ class SampleComponent extends Component {
   }
 
   componentDidMount() {
-    this.messageId = setInterval( () => {
-      //incrememnt message id and send to reducer
-      this.changeMessage();
-    }, 1000);
+    // this.messageId = setInterval( () => {
+    //   //incrememnt message id and send to reducer
+    //   this.changeMessage();
+    // }, 1000);
+
+    // this.temperatureId = setInterval( () => {
+    //   //incrememnt message id and send to reducer
+    //   this.changeMessage();
+    // }, 1000);
   }
 
   componentWillUnmount() {
     clearInterval(this.messageId);
+    // clearInterval(this.temperatureId);
   }
 
   render() {
     return (
-      <div className="sample">
-        <h4 className="sampleHeader">Skip the Boring Stuff!</h4>
-        <h6 className="sampleHeader">I can do { this.props.message }</h6>
+      <div>
+        <div className="row">
+          <div id="Geoff" className="col-lg-10 col-md-10 col-sm-12">
+            {getComponent()}
+          </div>
+          <div id="temperature" className="col-lg-2 col-md-2 col-sm-12">
+            <h2>{this.props.temperature}</h2>
+          </div>
+        </div>
       </div>
     );
   }
@@ -47,12 +59,13 @@ class SampleComponent extends Component {
   }
 }
 
+var temperature = 87;
 // EXAMPLE
 const mapState = state => {
   // The reducers are combined in reducers/index.js and that is where their name is set
   // The format is state.REDUCERNAME.propertyOfREDUCERNAME
   return {
-    message: state.dummyReducer.message
+    temperature: state.dummyReducer.temperature
   };
 };
 
@@ -62,3 +75,28 @@ const mapState = state => {
 // }
 
 export default connect(mapState, null)(SampleComponent);
+
+function componentA(){
+  return (
+    <img src="/images/Geoff-Face.jpg"></img>
+  );
+}
+
+function componentB(){
+  return (
+    <img src="/images/Cold-Temp.png"></img>
+  );
+}
+
+function componentC(){
+  return (
+    <img src="/images/hotTemp.jpg"></img>
+  );
+}
+
+  var test = 2;
+  function getComponent(){
+    if(test === 0) return componentA();
+    if(test === 1) return componentB();
+    return componentC();
+  }
