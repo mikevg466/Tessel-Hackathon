@@ -7,9 +7,9 @@ var climate = climatelib.use(tessel.port['A']);
 
 
 var postOptions = {
-    host: "192.168.1.21", //need host
-    port: 1337, //need port
-    path: "/api/measure",
+    host: "10.0.2.15", //need host
+    port: 3000, //need port
+    path: "/tessel/temperature",
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
