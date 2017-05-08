@@ -16,22 +16,34 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
 app.listen(PORT, () => {
-  console.log('Server listening on Port: ', PORT);
+ console.log('Server listening on Port: ', PORT);
 })
 
 //redirect api routes
 app.use('/api', require('./api'));
-
+// app.use('/tessel', tessel)
 app.use(express.static(path.join(__dirname, '..', 'client/src/public')));
 app.use(express.static(path.join(__dirname, '..', 'node_modules')));
 
+let data = {temperature: null};
+
+app.get('/tessel', function(req, res, next){
+ res.send(data);
+})
+
+app.post('/tessel/temperature', function(req, res, next){
+ console.log(req.body.temperature);
+ data.temperature = req.body.temperature
+})
+
+
 app.get('*', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '..', 'client/src/public/index.html'));
+ res.sendFile(path.join(__dirname, '..', 'client/src/public/index.html'));
 });
 
 //Error Handler
 app.use('/', (err, req, res, next) => {
-  console.error(err);
-  console.error(err.stack);
-  res.status(err.status || 500).send(err.message || 'Internal Server error.');
+ console.error(err);
+ console.error(err.stack);
+ res.status(err.status || 500).send(err.message || 'Internal Server error.');
 });
