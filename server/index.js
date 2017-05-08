@@ -2,12 +2,19 @@ const path = require('path');
 const express = require('express');
 const volleyball = require('volleyball');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const PORT = 3000;
 
 
 const app = express();
+app.use(cors());
+app.options('*', cors());
 
+let data = {
+  temperature: '',
+  picture: '',
+}
 //logging middleware
 app.use(volleyball);
 
@@ -25,16 +32,33 @@ app.use('/api', require('./api'));
 app.use(express.static(path.join(__dirname, '..', 'client/src/public')));
 app.use(express.static(path.join(__dirname, '..', 'node_modules')));
 
-let data = {temperature: null};
 
 app.get('/tessel', function(req, res, next){
- res.send(data);
+  console.log('tried to get tessel data');
+ res.status(200).json(data);
 })
 
 app.post('/tessel/temperature', function(req, res, next){
- console.log(req.body.temperature);
- data.temperature = req.body.temperature
+  console.log(req.body.temperature);
+  data.temperature = req.body.temperature
 })
+
+app.post('/tessel/picture', function(req, res, next){
+
+    console.log('Request received');
+
+    var imageData = new Buffer(0);
+
+    req.on('data', function (chunk) {
+        imageData = Buffer.concat([imageData, chunk]);
+    });
+
+    req.on('end', function () {
+       // Full image ready.
+        data.picture = imageData
+    });
+
+});
 
 
 app.get('*', (req, res, next) => {
