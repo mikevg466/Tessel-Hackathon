@@ -19,7 +19,7 @@ export const amountOfMessages = messages.length - 1;
 
 /* Initial State */
 const initialState = {
-  message: messages[0]
+  temperature: 87
 };
 
 /* Reducer Function */
