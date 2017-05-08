@@ -1,4 +1,3 @@
-
 var http = require('http');
 var tessel = require('tessel');
 var climatelib = require('climate-si7020');
@@ -7,7 +6,7 @@ var climate = climatelib.use(tessel.port['A']);
 
 
 var postOptions = {
-    host: "10.0.2.15", //need host
+    host: "192.168.3.97", //need host
     port: 3000, //need port
     path: "/tessel/temperature",
     method: 'POST',
@@ -53,7 +52,7 @@ climate.on('ready', function () {
           'humidity': humid.toFixed(2)
         });
         SendData(postData);
-        setTimeout(loop, 5000);
+        setTimeout(loop, 500);
       });
     });
   });
